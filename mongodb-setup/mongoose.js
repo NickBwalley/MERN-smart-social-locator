@@ -19,7 +19,7 @@ const createProduct = async (req, res, next) => {
     price: req.body.price,
   });
   const result = await createdProduct.save();
-
+  console.log(typeof createdProduct._id);
   res.json(result);
 };
 
