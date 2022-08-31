@@ -52,7 +52,7 @@ const getPlacesByUserId = (req, res, next) => {
   res.json({ places });
 };
 
-const createPlace = async (req, res, next) => {
+const createPlace = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
@@ -64,7 +64,7 @@ const createPlace = async (req, res, next) => {
 
   let coordinates;
   try {
-    coordinates = await getCoordsForAddress(address);
+    coordinates = getCoordsForAddress();
   } catch (error) {
     return next(error);
   }
@@ -74,14 +74,17 @@ const createPlace = async (req, res, next) => {
     title,
     description,
     address,
-    location: coordinates,
+    location: {
+      lat: 40.7484474,
+      lng: -73.9871516,
+    },
     image:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg",
     creator,
   });
 
   try {
-    await createdPlace.save();
+    createdPlace.save();
   } catch (err) {
     const error = new HttpError(
       "Creating place failed, please try again.",
