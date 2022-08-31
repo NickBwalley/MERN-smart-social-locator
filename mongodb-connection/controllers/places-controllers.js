@@ -76,14 +76,15 @@ const createPlace = async (req, res, next) => {
     address,
     location: coordinates,
     image:
-      "https://onlocationtours.com/blog/new-york-city-sightseeing-itinerary-for-movie-buffs/",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg",
     creator,
   });
+
   try {
     await createdPlace.save();
   } catch (err) {
     const error = new HttpError(
-      "Creating place failed, please try again!",
+      "Creating place failed, please try again.",
       500
     );
     return next(error);
